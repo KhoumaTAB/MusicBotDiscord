@@ -45,8 +45,8 @@ client.on("message", async msg => {
       const playlist = await youtube.getPlaylist(url);
       const videos = await playlist.getVideos();
       for (const video of Object.values(videos)) {
-        const video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
-        await handleVideo(video2, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
+        const video2 = await youtube.getVideoByID(video.id);
+        await handleVideo(video2, msg, voiceChannel, true);
       }
       msg.channel.send(`✅ Playlist: **${playlist.title}** a été ajouté !`);
     } else {
@@ -101,7 +101,8 @@ Veuillez entrer un numéro correspondant à la musique de votre choix.
       msg.channel.send("Tu n'es pas dans un channel vocal !");
     if (!serverQueue) msg.channel.send("Il n'y a rien dans la playlist.");
     serverQueue.songs = [];
-    serverQueue.connection.dispatcher.end("Tu viens d'arrêter la musique !");
+    serverQueue.connection.dispatcher.end(`Tu viens d'arrêter la musique !`);
+    msg.channel.send("Tu viens d'arrêter la musique");
     undefined;
   } else if (command === "volume") {
     if (!msg.member.voiceChannel)
@@ -206,5 +207,11 @@ function play(guild, song) {
 
   serverQueue.textChannel.send(`🎶 Start playing: **${song.title}**`);
 }
+
+client.on("message", msg => {
+  if (msg.content === "ping") {
+    msg.channel.send("Pong");
+  }
+});
 
 client.login(process.env.TOKEN);

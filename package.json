@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemon": "node node_modules/nodemon/bin/nodemon bot.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +19,8 @@
     "node-opus": "^0.3.1",
     "simple-youtube-api": "^5.1.1",
     "ytdl-core": "^0.28.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.8"
   }
 }
