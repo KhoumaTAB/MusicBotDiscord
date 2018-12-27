@@ -149,19 +149,22 @@ Veuillez entrer un numéro correspondant à la musique de votre choix.
   } else if (command === "np") {
     if (!serverQueue) {
       msg.channel.send("Il n'y a rien dans la playlist.");
+      return undefined;
     }
     msg.channel.send(`🎶 Now playing: **${serverQueue.songs[0].title}**`);
   } else if (command === "queue") {
     if (!serverQueue) {
       msg.channel.send("Il n'y a rien dans la playlist.");
-    }
-    msg.channel.send(`
+      return undefined;
+    } else {
+      msg.channel.send(`
 __**Playlist:**__
 
 ${serverQueue.songs.map(song => `**-** ${song.title}`).join("\n")}
 
 **Now playing:** ${serverQueue.songs[0].title}
 		`);
+    }
   } else if (command === "pause") {
     if (serverQueue && serverQueue.playing) {
       serverQueue.playing = false;
@@ -180,6 +183,21 @@ ${serverQueue.songs.map(song => `**-** ${song.title}`).join("\n")}
     } else {
       msg.channel.send("Il n'y a rien dans la playlist.");
     }
+    // } else if (command === "clear") {
+    //   if (serverQueue.playing) {
+    //     msg.channel.send(
+    //       "Tu ne peux pas vider la Playlist en cours d'utilisation."
+    //     );
+    //     return undefined;
+    //   }
+    //   if (serverQueue) {
+    //     serverQueue.songs = [];
+    //     msg.channel.send(`${msg.member.displayName} a vidé la Playlist`);
+    //     return undefined;
+    //   } else {
+    //     msg.channel.send("Il n'y a rien dans la playlist.");
+    //     return undefined;
+    //   }
   }
   undefined;
 });
